@@ -15,7 +15,7 @@
     {
       "id": 3,
       "titulo": "CUARTO: Gigantes de la Prehistoria.",
-      "imagen": "../4/src/img/act2.jpg",
+      "imagen": "./4/src/img/act2.jpg",
       "url": "./4/src/actividades/act2.html"
     },
     {
