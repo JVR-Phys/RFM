@@ -3,38 +3,38 @@
     {
       "id": 1,
       "titulo": "SEXTO: Introducción electrónica.",
-      "imagen": "../6/src/img/act1.jpg",
-      "url": "../6/src/actividades/act1.html"
+      "imagen": "./6/src/img/act1.jpg",
+      "url": "./6/src/actividades/act1.html"
     },
     {
       "id": 2,
       "titulo": "CUARTO: El Robot que quería ser Chef.",
-      "imagen": "../4/src/img/act1.jpg",
-      "url": "../4/src/actividades/act1.html"
+      "imagen": "./4/src/img/act1.jpg",
+      "url": "./4/src/actividades/act1.html"
     },
     {
       "id": 3,
       "titulo": "CUARTO: Gigantes de la Prehistoria.",
       "imagen": "../4/src/img/act2.jpg",
-      "url": "../4/src/actividades/act2.html"
+      "url": "./4/src/actividades/act2.html"
     },
     {
       "id": 4,
       "titulo": "CUARTO: Natalicio de Benito Juárez.",
-      "imagen": "../4/src/img/act3.jpg",
-      "url": "../4/src/actividades/act3.html"
+      "imagen": "./4/src/img/act3.jpg",
+      "url": "./4/src/actividades/act3.html"
     },
     {
       "id": 5,
       "titulo": "CUARTO: Misiones a la Luna.",
-      "imagen": "../4/src/img/act4.jpg",
-      "url": "../4/src/actividades/act4.html"
+      "imagen": "./4/src/img/act4.jpg",
+      "url": "./4/src/actividades/act4.html"
     },
     {
       "id": 6,
       "titulo": "QUINTO: Rumbo a la Luna.",
-      "imagen": "../5/src/img/act1.jpg",
-      "url": "../5/src/actividades/act1.html"
+      "imagen": "./5/src/img/act1.jpg",
+      "url": "./5/src/actividades/act1.html"
     }
   ]
 }
