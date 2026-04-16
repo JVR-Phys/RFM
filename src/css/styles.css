@@ -49,7 +49,7 @@ p{
     color:#e0e0e0
 }
 
-ul{
+.barNav ul{
     list-style-type: none;
     margin: 0;
     padding: 0px;
@@ -61,7 +61,7 @@ ul{
     flex-wrap: wrap;
 }
 
-ul li a{
+.barNav a{
     display: block;
     text-align: center;
     color: white;
@@ -70,8 +70,14 @@ ul li a{
     transition: background-color 0.3s;
 }
 
+.barNav a:hover{
+    transform: scale(1.05);
+    transition: transform 150ms ease-in-out;
+}
+
 .primero{
     background-color: #E53935;
+    border-radius: 15px;
 }
 .primero:hover{
     background-color: #aa1a1a;
@@ -79,6 +85,7 @@ ul li a{
 
 .segundo{
     background-color: #FB8C00;
+    border-radius: 15px;
 }
 .segundo:hover{
     background-color: #d34a00;
@@ -87,6 +94,7 @@ ul li a{
 .tercero{
     background-color: #FBC02D;
     color: #222;
+    border-radius: 15px;
 }
 .tercero:hover{
     background-color: #e99d23;
@@ -94,6 +102,7 @@ ul li a{
 
 .cuarto{
     background-color: #43A047;
+    border-radius: 15px;
 }
 .cuarto:hover{
     background-color: #1B5E20;
@@ -101,6 +110,7 @@ ul li a{
 
 .quinto{
     background-color: #1E88E5;
+    border-radius: 15px;
 }
 .quinto:hover{
     background-color: #0D47A1;
@@ -108,24 +118,25 @@ ul li a{
 
 .sexto{
     background-color: #8E24AA;
+    border-radius: 15px;
 }
 .sexto:hover{
     background-color: #4A148C;
 }
 
 @media (max-width: 600px) {
-    ul {
+    .barNav ul {
         display: flex;
         flex-wrap: wrap;
     }
 
-    ul li {
+    .barNav li {
         width: 50%;
         box-sizing: border-box;
         border: 0.5px solid #666;
     }
 
-    ul li a {
+    .barNav a {
         float: none;
         width: 100%;
         padding: 20px 0;
