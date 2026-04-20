@@ -148,6 +148,21 @@ ul li a{
     padding-bottom: 10px;
 }
 
+.titulo-act {
+    color: #1a237e;
+    margin-bottom: 24px;
+    font-size: 1.5em;
+    padding-bottom: 10px;
+}
+
+.texto-act{
+    text-align: left;
+    background-color: color(srgb 1 0.97 0.31 / 0.26);
+    margin: 30px 50px;
+    padding: 10px 25px;
+    border-radius: 20px;
+}
+
 .grid-actividades {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

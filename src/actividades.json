@@ -59,6 +59,12 @@
       "titulo": "Conectar un sensor",
       "imagen": "./6/src/img/Conectar un sensor.jpg",
       "url": "./6/src/actividades/Conectar un sensor.pdf"
+    },
+    {
+      "id": 11,
+      "titulo": "Investigación sobre animales.",
+      "imagen": "./4/src/img/act5.jpg",
+      "url": "./4/src/actividades/act5.html"
     }
   ]
 }
