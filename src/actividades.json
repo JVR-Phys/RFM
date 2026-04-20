@@ -1,5 +1,5 @@
 {
-  "actividades":[
+  "actividades": [
     {
       "id": 1,
       "titulo": "SEXTO: Introducción electrónica.",
@@ -35,6 +35,30 @@
       "titulo": "QUINTO: Rumbo a la Luna.",
       "imagen": "./5/src/img/act1.jpg",
       "url": "./5/src/actividades/act1.html"
+    },
+    {
+      "id": 7,
+      "titulo": "Como usar una protoboard",
+      "imagen": "./6/src/img/Como usar una protoboard.jpg",
+      "url": "./6/src/actividades/Como usar una protoboard.pdf"
+    },
+    {
+      "id": 8,
+      "titulo": "Conectar un LED",
+      "imagen": "./6/src/img/Conectar un LED.jpg",
+      "url": "./6/src/actividades/Conectar un LED.pdf"
+    },
+    {
+      "id": 9,
+      "titulo": "Conectar un boton",
+      "imagen": "./6/src/img/Conectar un boton.jpg",
+      "url": "./6/src/actividades/Conectar un boton.pdf"
+    },
+    {
+      "id": 10,
+      "titulo": "Conectar un sensor",
+      "imagen": "./6/src/img/Conectar un sensor.jpg",
+      "url": "./6/src/actividades/Conectar un sensor.pdf"
     }
   ]
 }
