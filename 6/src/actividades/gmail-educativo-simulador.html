@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gmail Educativo – Simulador para Estudiantes</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   RESET & VARIABLES
+══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --blue:#1a73e8;
+  --blue-soft:#e8f0fe;
+  --blue-hover:#1557b0;
+  --red:#d93025;
+  --red-soft:#fce8e6;
+  --green:#1e8e3e;
+  --green-soft:#e6f4ea;
+  --yellow:#f9ab00;
+  --text:#202124;
+  --text-2:#5f6368;
+  --text-3:#80868b;
+  --bg:#f6f8fc;
+  --white:#ffffff;
+  --border:#e0e0e0;
+  --sidebar-w:256px;
+  --header-h:64px;
+  --shadow-sm:0 1px 2px rgba(60,64,67,.3),0 1px 3px rgba(60,64,67,.15);
+  --shadow-md:0 1px 3px rgba(60,64,67,.3),0 4px 8px rgba(60,64,67,.15);
+  --shadow-lg:0 8px 24px rgba(60,64,67,.2),0 2px 8px rgba(60,64,67,.1);
+  --font:'Google Sans','Roboto',sans-serif;
+  --radius:20px;
+}
+
+html,body{height:100%;overflow:hidden;font-family:var(--font)}
+body{background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+
+/* ══════════════════════════════════════════
+   TOP BAR
+══════════════════════════════════════════ */
+.topbar{
+  height:var(--header-h);
+  background:var(--bg);
+  display:flex;align-items:center;
+  padding:0 16px;gap:12px;
+  flex-shrink:0;
+  position:relative;z-index:10;
+}
+
+.topbar-left{
+  display:flex;align-items:center;gap:8px;
+  width:var(--sidebar-w);
+  flex-shrink:0;
+  padding-left:8px;
+}
+
+.menu-btn{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:none;background:none;cursor:pointer;
+  color:var(--text-2);transition:background .15s;
+}
+.menu-btn:hover{background:rgba(60,64,67,.08)}
+.menu-btn svg{width:20px;height:20px}
+
+.gmail-logo{
+  display:flex;align-items:center;gap:4px;
+  text-decoration:none;
+}
+.gmail-logo-text{
+  font-size:22px;font-weight:400;color:var(--text-2);
+  letter-spacing:-.5px;
+}
+.gmail-logo-text span{color:var(--red)}
+
+.search-bar{
+  flex:1;max-width:720px;
+  height:46px;
+  background:var(--white);
+  border-radius:24px;
+  display:flex;align-items:center;
+  padding:0 16px;gap:12px;
+  box-shadow:var(--shadow-sm);
+  transition:box-shadow .2s,background .2s;
+  cursor:text;
+}
+.search-bar:hover{box-shadow:var(--shadow-md);background:#eaf1fb}
+.search-bar svg{color:var(--text-2);width:20px;height:20px;flex-shrink:0}
+.search-bar span{font-size:16px;color:var(--text-3);user-select:none}
+
+.topbar-right{
+  margin-left:auto;display:flex;align-items:center;gap:8px;
+}
+.avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#4285f4,#34a853);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:15px;font-weight:500;cursor:pointer;
+  user-select:none;
+}
+
+/* ══════════════════════════════════════════
+   MAIN LAYOUT
+══════════════════════════════════════════ */
+.layout{
+  flex:1;display:flex;overflow:hidden;
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.sidebar{
+  width:var(--sidebar-w);
+  padding:8px 0;
+  flex-shrink:0;
+  overflow-y:auto;
+}
+
+.compose-btn{
+  display:flex;align-items:center;gap:12px;
+  margin:0 8px 16px;
+  padding:16px 20px;
+  background:var(--white);
+  border:none;border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  font-family:var(--font);
+  font-size:14px;font-weight:500;
+  color:var(--text);
+  transition:box-shadow .2s,background .15s;
+  width:calc(100% - 16px);
+  text-align:left;
+}
+.compose-btn:hover{box-shadow:var(--shadow-md);background:#f2f6fc}
+.compose-btn:active{box-shadow:none}
+.compose-btn svg{width:24px;height:24px;color:var(--text-2)}
+
+.nav-item{
+  display:flex;align-items:center;gap:16px;
+  padding:0 16px;height:40px;
+  border-radius:0 20px 20px 0;
+  margin-right:16px;
+  cursor:pointer;
+  font-size:14px;font-weight:500;color:var(--text);
+  transition:background .15s;
+  border:none;background:none;font-family:var(--font);
+  width:calc(100% - 16px);
+  text-align:left;
+  position:relative;
+}
+.nav-item:hover{background:rgba(60,64,67,.08)}
+.nav-item.active{background:#d3e3fd;color:var(--text)}
+.nav-item svg{width:20px;height:20px;flex-shrink:0}
+.nav-item .badge{
+  margin-left:auto;
+  font-size:12px;font-weight:500;color:var(--text);
+}
+.nav-item.spam-item svg{color:var(--red)}
+.nav-item.spam-item .badge{color:var(--red)}
+
+/* ══════════════════════════════════════════
+   CONTENT AREA
+══════════════════════════════════════════ */
+.content{
+  flex:1;overflow:hidden;display:flex;flex-direction:column;
+}
+
+/* ══════════════════════════════════════════
+   MAIL LIST
+══════════════════════════════════════════ */
+.mail-list-view{
+  display:flex;flex-direction:column;height:100%;overflow:hidden;
+}
+
+.folder-header{
+  padding:8px 16px 4px;
+  display:flex;align-items:center;gap:8px;
+}
+.folder-title{
+  font-size:18px;font-weight:400;color:var(--text);
+  padding:4px 0;
+}
+
+/* SPAM warning banner */
+.spam-banner{
+  margin:8px 16px;
+  padding:12px 16px;
+  background:var(--red-soft);
+  border-radius:12px;
+  border-left:4px solid var(--red);
+  font-size:13px;color:var(--red);
+  display:none;
+  gap:10px;
+  align-items:flex-start;
+}
+.spam-banner.visible{display:flex}
+.spam-banner svg{width:18px;height:18px;flex-shrink:0;margin-top:1px}
+.spam-banner strong{display:block;margin-bottom:2px}
+
+.mail-list{
+  flex:1;overflow-y:auto;
+  padding:0 8px;
+}
+
+.mail-row{
+  display:flex;align-items:center;
+  padding:0 16px;
+  height:52px;
+  border-radius:12px;
+  cursor:pointer;
+  gap:12px;
+  transition:background .12s,box-shadow .12s;
+  border-bottom:1px solid transparent;
+  position:relative;
+}
+.mail-row:hover{
+  background:rgba(60,64,67,.06);
+  box-shadow:var(--shadow-sm);
+  z-index:1;
+}
+.mail-row.unread{background:var(--white)}
+.mail-row.unread:hover{background:#f2f6fc}
+
+.mail-avatar{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:500;color:#fff;
+  flex-shrink:0;
+}
+
+.mail-meta{flex:1;display:flex;align-items:center;gap:0;min-width:0}
+.mail-sender{
+  font-size:14px;font-weight:400;color:var(--text);
+  min-width:160px;max-width:180px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  flex-shrink:0;
+}
+.mail-row.unread .mail-sender{font-weight:600}
+
+.mail-subject-preview{
+  flex:1;font-size:14px;color:var(--text-2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  padding:0 8px;
+}
+.mail-subject-preview .subject{font-weight:400;color:var(--text)}
+.mail-row.unread .mail-subject-preview .subject{font-weight:600}
+
+.mail-date{
+  font-size:12px;color:var(--text-2);
+  white-space:nowrap;flex-shrink:0;
+}
+.mail-row.unread .mail-date{font-weight:600;color:var(--text)}
+
+/* Spam tag */
+.spam-tag{
+  font-size:11px;font-weight:500;
+  background:var(--red-soft);color:var(--red);
+  padding:2px 8px;border-radius:12px;
+  white-space:nowrap;flex-shrink:0;
+}
+
+/* Unread dot */
+.unread-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--blue);flex-shrink:0;
+}
+
+/* Empty state */
+.empty-state{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px;color:var(--text-2);gap:16px;
+  text-align:center;
+}
+.empty-state svg{width:80px;height:80px;opacity:.3}
+.empty-state p{font-size:16px}
+
+/* ══════════════════════════════════════════
+   MAIL DETAIL VIEW
+══════════════════════════════════════════ */
+.mail-detail-view{
+  display:none;flex-direction:column;
+  height:100%;overflow:hidden;
+}
+.mail-detail-view.visible{display:flex}
+
+.detail-toolbar{
+  display:flex;align-items:center;gap:4px;
+  padding:8px 16px;
+  flex-shrink:0;
+}
+.icon-btn{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:none;background:none;cursor:pointer;
+  color:var(--text-2);transition:background .15s;
+}
+.icon-btn:hover{background:rgba(60,64,67,.1)}
+.icon-btn svg{width:20px;height:20px}
+
+.detail-scroll{flex:1;overflow-y:auto;padding:8px 24px 40px}
+
+.detail-subject{
+  font-size:26px;font-weight:400;color:var(--text);
+  margin-bottom:16px;line-height:1.3;
+}
+.detail-subject .spam-tag-lg{
+  font-size:13px;font-weight:500;
+  background:var(--red-soft);color:var(--red);
+  padding:3px 10px;border-radius:14px;
+  margin-left:10px;vertical-align:middle;
+}
+
+.detail-card{
+  background:var(--white);
+  border-radius:16px;
+  padding:24px;
+  box-shadow:var(--shadow-sm);
+}
+
+.detail-sender-row{
+  display:flex;align-items:flex-start;gap:16px;
+  margin-bottom:20px;
+}
+.detail-avatar{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:500;color:#fff;flex-shrink:0;
+}
+.detail-sender-info{flex:1}
+.detail-sender-name{font-size:15px;font-weight:500;color:var(--text)}
+.detail-sender-email{font-size:13px;color:var(--text-2)}
+.detail-date-right{font-size:12px;color:var(--text-2);white-space:nowrap}
+
+.detail-divider{height:1px;background:var(--border);margin:0 0 20px}
+
+.detail-body{
+  font-size:15px;line-height:1.75;color:var(--text);
+  white-space:pre-wrap;
+}
+
+/* Spam warning inside detail */
+.spam-alert{
+  background:var(--red-soft);border:1px solid #f5c6c3;
+  border-radius:12px;padding:16px 20px;
+  margin-bottom:20px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.spam-alert svg{width:22px;height:22px;color:var(--red);flex-shrink:0;margin-top:2px}
+.spam-alert-title{font-size:15px;font-weight:600;color:var(--red);margin-bottom:4px}
+.spam-alert-body{font-size:13px;color:var(--red);line-height:1.5}
+
+/* ══════════════════════════════════════════
+   COMPOSE MODAL (bottom-right)
+══════════════════════════════════════════ */
+.compose-modal{
+  position:fixed;
+  bottom:24px;right:24px;
+  width:480px;
+  background:var(--white);
+  border-radius:16px 16px 4px 4px;
+  box-shadow:0 8px 32px rgba(0,0,0,.22),0 2px 8px rgba(0,0,0,.12);
+  display:flex;flex-direction:column;
+  z-index:50;
+  transform:translateY(24px) scale(.96);
+  opacity:0;
+  pointer-events:none;
+  transition:transform .25s cubic-bezier(.22,1,.36,1),opacity .2s;
+  max-height:520px;
+}
+.compose-modal.open{
+  transform:translateY(0) scale(1);
+  opacity:1;pointer-events:all;
+}
+
+.compose-header{
+  display:flex;align-items:center;
+  background:#404040;color:#fff;
+  padding:10px 16px;
+  border-radius:16px 16px 0 0;
+  cursor:default;user-select:none;
+}
+.compose-header-title{font-size:14px;font-weight:500;flex:1}
+.compose-header-btns{display:flex;gap:4px}
+.compose-hbtn{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:none;background:none;cursor:pointer;
+  color:rgba(255,255,255,.8);transition:background .15s;
+}
+.compose-hbtn:hover{background:rgba(255,255,255,.15)}
+.compose-hbtn svg{width:16px;height:16px}
+
+.compose-field{
+  display:flex;align-items:center;
+  padding:4px 16px;
+  border-bottom:1px solid var(--border);
+  min-height:40px;
+}
+.compose-field label{
+  font-size:13px;color:var(--text-2);
+  min-width:56px;flex-shrink:0;
+}
+.compose-field input{
+  flex:1;border:none;outline:none;
+  font-size:15px;color:var(--text);
+  font-family:var(--font);
+  background:transparent;
+  padding:4px 0;
+}
+
+.compose-body{
+  flex:1;padding:8px 16px;
+  overflow:hidden;
+}
+.compose-body textarea{
+  width:100%;height:200px;
+  border:none;outline:none;resize:none;
+  font-size:15px;font-family:var(--font);
+  color:var(--text);line-height:1.6;
+  background:transparent;
+}
+
+.compose-footer{
+  display:flex;align-items:center;
+  padding:10px 16px;gap:8px;
+}
+.btn-send{
+  background:var(--blue);color:#fff;
+  border:none;border-radius:20px;
+  padding:9px 22px;
+  font-family:var(--font);font-size:14px;font-weight:500;
+  cursor:pointer;
+  transition:background .15s,box-shadow .15s;
+  box-shadow:var(--shadow-sm);
+}
+.btn-send:hover{background:var(--blue-hover);box-shadow:var(--shadow-md)}
+.btn-send:active{transform:scale(.97)}
+
+.compose-error{
+  font-size:12px;color:var(--red);
+  padding:0 16px 6px;
+  display:none;
+}
+.compose-error.visible{display:block}
+
+/* ══════════════════════════════════════════
+   TOAST NOTIFICATION
+══════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:#323232;color:#fff;
+  font-size:14px;font-family:var(--font);
+  padding:12px 24px;border-radius:8px;
+  box-shadow:var(--shadow-md);
+  z-index:100;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ══════════════════════════════════════════
+   SCROLLBAR STYLE
+══════════════════════════════════════════ */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.28)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ TOP BAR ═══════════════════ -->
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="menu-btn" aria-label="Menú">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </button>
+    <div class="gmail-logo">
+      <svg width="36" height="26" viewBox="0 0 36 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 4L18 15L34 4" stroke="#EA4335" stroke-width="2.5"/>
+        <rect x="2" y="4" width="32" height="18" rx="2" stroke="#4285F4" stroke-width="2.5" fill="none"/>
+        <path d="M2 4L18 15L34 4V22H2V4Z" fill="#FAFAFA" stroke="none"/>
+        <path d="M2 4L18 15L34 4" stroke="#EA4335" stroke-width="2.5" stroke-linejoin="round"/>
+      </svg>
+      <span class="gmail-logo-text">G<span>m</span>ail</span>
+    </div>
+  </div>
+
+  <div class="search-bar" role="search">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.49 19l-5.73-5.73C15.53 12.2 16 10.91 16 9.5a6.5 6.5 0 1 0-6.5 6.5c1.41 0 2.7-.47 3.77-1.24L19 20.49 20.49 19zM5 9.5a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z"/></svg>
+    <span>Buscar en el correo</span>
+  </div>
+
+  <div class="topbar-right">
+    <div class="avatar">E</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LAYOUT ═══════════════════ -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <button class="compose-btn" id="composeBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+      Redactar
+    </button>
+
+    <button class="nav-item active" id="nav-inbox" onclick="showFolder('inbox')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H4.99C3.89 3 3 3.9 3 5L3.01 19c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z"/></svg>
+      Recibidos
+      <span class="badge" id="badge-inbox">1</span>
+    </button>
+
+    <button class="nav-item" id="nav-sent" onclick="showFolder('sent')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      Enviados
+    </button>
+
+    <button class="nav-item spam-item" id="nav-spam" onclick="showFolder('spam')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      Spam
+      <span class="badge" id="badge-spam">1</span>
+    </button>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- MAIL LIST VIEW -->
+    <div class="mail-list-view" id="mailListView">
+      <div class="folder-header">
+        <span class="folder-title" id="folderTitle">Recibidos</span>
+      </div>
+      <div class="spam-banner" id="spamBanner">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <div>
+          <strong>⚠️ ¡Zona de Peligro! – Carpeta SPAM</strong>
+          Estos correos pueden ser intentos de estafa. Nunca hagas clic en sus enlaces ni compartas información personal. ¡Aprende a identificarlos!
+        </div>
+      </div>
+      <div class="mail-list" id="mailList"></div>
+    </div>
+
+    <!-- MAIL DETAIL VIEW -->
+    <div class="mail-detail-view" id="mailDetailView">
+      <div class="detail-toolbar">
+        <button class="icon-btn" onclick="closeDetail()" title="Volver">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>
+      </div>
+      <div class="detail-scroll" id="detailScroll"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /layout -->
+
+
+<!-- ═══════════════════ COMPOSE MODAL ═══════════════════ -->
+<div class="compose-modal" id="composeModal" role="dialog" aria-label="Redactar correo">
+  <div class="compose-header">
+    <span class="compose-header-title">Redactar</span>
+    <div class="compose-header-btns">
+      <button class="compose-hbtn" onclick="closeCompose()" title="Cerrar">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="compose-field">
+    <label for="cTo">Para</label>
+    <input id="cTo" type="email" placeholder="destinatario@ejemplo.com" autocomplete="off"/>
+  </div>
+  <div class="compose-field">
+    <label for="cSubject">Asunto</label>
+    <input id="cSubject" type="text" placeholder="Escribe el asunto…" autocomplete="off"/>
+  </div>
+  <div class="compose-body">
+    <textarea id="cBody" placeholder="Escribe tu mensaje aquí…"></textarea>
+  </div>
+  <div class="compose-error" id="composeError">⚠️ El campo "Para" debe contener una dirección de correo válida (incluir @).</div>
+  <div class="compose-footer">
+    <button class="btn-send" onclick="sendMail()">Enviar</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOAST ═══════════════════ -->
+<div class="toast" id="toast"></div>
+
+
+<script>
+/* ════════════════════════════════════════════════
+   DATA – correos precargados
+════════════════════════════════════════════════ */
+const COLORS = ['#1a73e8','#34a853','#ea4335','#f9ab00','#9c27b0','#00897b'];
+
+let mails = {
+  inbox:[
+    {
+      id:'i1',
+      from:'Profesor de Computación',
+      email:'profe.computo@escuela.edu',
+      subject:'Tarea de la semana 📚',
+      preview:'¡Hola, estudiante! Esta semana aprenderemos sobre seguridad en internet…',
+      body:`¡Hola, estudiante! 👋
+
+Esta semana aprenderemos sobre seguridad en internet. Es un tema muy importante que te ayudará a protegerte en el mundo digital.
+
+Tu tarea es:
+  1. Leer sobre las contraseñas seguras.
+  2. Practicar cómo identificar correos falsos (spam).
+  3. Hablar con tus padres sobre las reglas de seguridad en casa.
+
+Recuerda: ¡Nunca compartas tu contraseña con nadie, ni siquiera con tus amigos!
+
+Si tienes alguna duda, puedes responder este correo o preguntarme en clase.
+
+¡Tú puedes lograrlo! 💪
+
+— Profesor de Computación`,
+      date:'10:30',
+      unread:true,
+      color:'#1a73e8',
+      spam:false
+    }
+  ],
+  sent:[
+    {
+      id:'s1',
+      from:'Tú',
+      email:'estudiante@gmail.com',
+      subject:'Tarea enviada ✅',
+      preview:'Profesor, aquí le envío mi tarea completada. ¡Gracias por sus enseñanzas!',
+      body:`Estimado Profesor de Computación:
+
+Le envío mi tarea de la semana completa.
+
+He leído sobre contraseñas seguras y aprendí que:
+  • Deben tener al menos 8 caracteres.
+  • Es bueno mezclar letras, números y símbolos.
+  • No debo usar mi nombre ni fecha de cumpleaños.
+
+¡Gracias por enseñarme sobre seguridad digital!
+
+Saludos,
+Tu estudiante 😊`,
+      date:'Ayer',
+      unread:false,
+      color:'#34a853',
+      spam:false
+    }
+  ],
+  spam:[
+    {
+      id:'sp1',
+      from:'Premios Ganados 🎰',
+      email:'noreply@premios-falsos.xyz',
+      subject:'¡¡¡HAS GANADO UN MILLÓN DE DÓLARES!!! HAZ CLIC AQUÍ',
+      preview:'¡FELICIDADES! Eres el ganador del gran premio. Necesitamos tus datos urgente…',
+      body:`¡¡¡FELICIDADES, AFORTUNADO GANADOR!!!
+
+Has sido seleccionado como el GANADOR ÚNICO del sorteo internacional de $1,000,000 USD.
+
+Para reclamar tu premio necesitamos URGENTE:
+  ❌ Tu nombre completo
+  ❌ Tu dirección de casa
+  ❌ El número de tarjeta bancaria de tus padres
+  ❌ Tu contraseña de correo electrónico
+
+HAZ CLIC EN EL ENLACE SECRETO AHORA: [NO HACER CLIC]
+
+Este premio vence en 24 HORAS. ¡Actúa ya!
+
+— Empresa de Premios Internacionales™`,
+      date:'Ayer',
+      unread:true,
+      color:'#ea4335',
+      spam:true
+    }
+  ]
+};
+
+let currentFolder = 'inbox';
+let composeOpen = false;
+
+/* ════════════════════════════════════════════════
+   UTILS
+════════════════════════════════════════════════ */
+function initial(name){return name.trim().charAt(0).toUpperCase()}
+
+function folderLabel(f){
+  return {inbox:'Recibidos',sent:'Enviados',spam:'Spam'}[f];
+}
+
+/* ════════════════════════════════════════════════
+   RENDER MAIL LIST
+════════════════════════════════════════════════ */
+function renderList(){
+  const list = mails[currentFolder];
+  const container = document.getElementById('mailList');
+  container.innerHTML = '';
+
+  if(!list.length){
+    container.innerHTML = `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <p>Esta carpeta está vacía.</p>
+      </div>`;
+    return;
+  }
+
+  list.forEach(mail => {
+    const row = document.createElement('div');
+    row.className = 'mail-row' + (mail.unread ? ' unread' : '');
+    row.onclick = () => openMail(mail);
+
+    row.innerHTML = `
+      <div class="mail-avatar" style="background:${mail.color}">${initial(mail.from)}</div>
+      ${mail.unread ? '<div class="unread-dot"></div>' : '<div style="width:8px"></div>'}
+      <div class="mail-meta">
+        <span class="mail-sender">${escHtml(mail.from)}</span>
+        <span class="mail-subject-preview">
+          <span class="subject">${escHtml(mail.subject)}</span>
+          &nbsp;–&nbsp;${escHtml(mail.preview)}
+        </span>
+      </div>
+      ${mail.spam ? '<span class="spam-tag">SPAM</span>' : ''}
+      <span class="mail-date">${escHtml(mail.date)}</span>
+    `;
+    container.appendChild(row);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   OPEN DETAIL
+════════════════════════════════════════════════ */
+function openMail(mail){
+  // mark read
+  mail.unread = false;
+  updateBadges();
+
+  const scroll = document.getElementById('detailScroll');
+
+  const spamBlock = mail.spam ? `
+    <div class="spam-alert">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <div>
+        <div class="spam-alert-title">⚠️ ¡Alerta de SPAM! Este correo es una estafa.</div>
+        <div class="spam-alert-body">
+          Nadie te regala un millón de dólares por correo. Este tipo de mensajes se llaman <strong>phishing</strong> o estafa. 
+          Nunca hagas clic en sus enlaces ni escribas tus datos personales. 
+          Lo correcto es <strong>eliminar</strong> este correo de inmediato.
+        </div>
+      </div>
+    </div>` : '';
+
+  scroll.innerHTML = `
+    <h2 class="detail-subject">
+      ${escHtml(mail.subject)}
+      ${mail.spam ? '<span class="spam-tag-lg">⚠️ SPAM</span>' : ''}
+    </h2>
+    ${spamBlock}
+    <div class="detail-card">
+      <div class="detail-sender-row">
+        <div class="detail-avatar" style="background:${mail.color}">${initial(mail.from)}</div>
+        <div class="detail-sender-info">
+          <div class="detail-sender-name">${escHtml(mail.from)}</div>
+          <div class="detail-sender-email">&lt;${escHtml(mail.email)}&gt;</div>
+        </div>
+        <div class="detail-date-right">${escHtml(mail.date)}</div>
+      </div>
+      <div class="detail-divider"></div>
+      <div class="detail-body">${escHtml(mail.body)}</div>
+    </div>
+  `;
+
+  document.getElementById('mailListView').style.display = 'none';
+  const dv = document.getElementById('mailDetailView');
+  dv.classList.add('visible');
+  scroll.scrollTop = 0;
+}
+
+function closeDetail(){
+  document.getElementById('mailDetailView').classList.remove('visible');
+  document.getElementById('mailListView').style.display = 'flex';
+  renderList();
+}
+
+/* ════════════════════════════════════════════════
+   FOLDER SWITCHING
+════════════════════════════════════════════════ */
+function showFolder(folder){
+  currentFolder = folder;
+
+  // nav active state
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('nav-'+folder).classList.add('active');
+
+  document.getElementById('folderTitle').textContent = folderLabel(folder);
+
+  // spam banner
+  const banner = document.getElementById('spamBanner');
+  banner.classList.toggle('visible', folder === 'spam');
+
+  // close detail if open
+  document.getElementById('mailDetailView').classList.remove('visible');
+  document.getElementById('mailListView').style.display = 'flex';
+
+  renderList();
+}
+
+/* ════════════════════════════════════════════════
+   BADGES
+════════════════════════════════════════════════ */
+function updateBadges(){
+  const ib = mails.inbox.filter(m=>m.unread).length;
+  const sp = mails.spam.filter(m=>m.unread).length;
+  const bi = document.getElementById('badge-inbox');
+  const bs = document.getElementById('badge-spam');
+  bi.textContent = ib || '';
+  bs.textContent = sp || '';
+}
+
+/* ════════════════════════════════════════════════
+   COMPOSE
+════════════════════════════════════════════════ */
+document.getElementById('composeBtn').onclick = openCompose;
+
+function openCompose(){
+  composeOpen = true;
+  document.getElementById('composeModal').classList.add('open');
+  document.getElementById('cTo').focus();
+}
+function closeCompose(){
+  composeOpen = false;
+  document.getElementById('composeModal').classList.remove('open');
+  clearCompose();
+}
+function clearCompose(){
+  ['cTo','cSubject','cBody'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('composeError').classList.remove('visible');
+}
+
+function sendMail(){
+  const to = document.getElementById('cTo').value.trim();
+  const subject = document.getElementById('cSubject').value.trim();
+  const body = document.getElementById('cBody').value.trim();
+  const errEl = document.getElementById('composeError');
+
+  if(!to.includes('@')){
+    errEl.classList.add('visible');
+    document.getElementById('cTo').focus();
+    return;
+  }
+  errEl.classList.remove('visible');
+
+  // Build new sent mail
+  const now = new Date();
+  const timeStr = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  const newMail = {
+    id:'s'+Date.now(),
+    from:'Tú',
+    email:'estudiante@gmail.com',
+    subject: subject || '(sin asunto)',
+    preview: body || '(sin contenido)',
+    body: body || '(Este correo no tiene contenido.)',
+    date: timeStr,
+    unread:false,
+    color:COLORS[Math.floor(Math.random()*COLORS.length)],
+    spam:false
+  };
+
+  mails.sent.unshift(newMail);
+  closeCompose();
+  showToast('✅ Mensaje enviado');
+
+  if(currentFolder === 'sent') renderList();
+}
+
+/* ════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════ */
+function showToast(msg, duration=3000){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), duration);
+}
+
+/* ════════════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════════════ */
+function escHtml(str){
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/* ════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════ */
+showFolder('inbox');
+updateBadges();
+</script>
+</body>
+</html>

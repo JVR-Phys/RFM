@@ -65,6 +65,18 @@
       "titulo": "Investigación sobre animales.",
       "imagen": "./4/src/img/act5.jpg",
       "url": "./4/src/actividades/act5.html"
+    },
+    {
+      "id": 12,
+      "titulo": "Simulador inicio de sesión gmail",
+      "imagen": "./6/src/img/google-signup-simulator.jpg",
+      "url": "./6/src/actividades/google-signup-simulator.html"
+    },
+    {
+      "id": 13,
+      "titulo": "Simulador enviar correo electrónico",
+      "imagen": "./6/src/img/gmail-educativo-simulador.jpg",
+      "url": "./6/src/actividades/gmail-educativo-simulador.html"
     }
   ]
 }

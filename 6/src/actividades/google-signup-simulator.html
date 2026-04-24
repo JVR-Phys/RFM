@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Registro Google para Estudiantes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1a73e8;
+      --blue-hover: #1557b0;
+      --blue-light: #e8f0fe;
+      --red: #d93025;
+      --green: #1e8e3e;
+      --text-primary: #202124;
+      --text-secondary: #5f6368;
+      --border: #dadce0;
+      --bg: #f1f3f4;
+      --white: #ffffff;
+      --shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.14);
+      --shadow-lg: 0 8px 28px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.08);
+      --radius: 28px;
+      --font-google: 'Google Sans', 'Roboto', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background-image: radial-gradient(circle at 20% 20%, rgba(26,115,232,.06) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(52,168,83,.06) 0%, transparent 50%);
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 480px;
+      padding: 40px 48px 32px;
+      animation: fadeUp .35s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── GOOGLE LOGO (SVG inline) ── */
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .google-logo {
+      height: 28px;
+      width: auto;
+    }
+
+    /* ── HEADER TEXT ── */
+    .card-title {
+      font-family: var(--font-google);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    /* ── MATERIAL FLOATING LABEL FIELDS ── */
+    .field-group {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .field-group .field-wrapper {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color .2s, box-shadow .2s;
+      background: var(--white);
+    }
+
+    .field-group .field-wrapper:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(26,115,232,.15);
+    }
+
+    .field-group label {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--text-secondary);
+      pointer-events: none;
+      transition: all .18s cubic-bezier(.4,0,.2,1);
+      background: var(--white);
+      padding: 0 4px;
+      line-height: 1;
+      z-index: 1;
+    }
+
+    /* float label up when focused or has value */
+    .field-group .field-wrapper:focus-within label,
+    .field-group.has-value label {
+      top: 0;
+      font-size: 11px;
+      color: var(--blue);
+    }
+
+    .field-group.error .field-wrapper { border-color: var(--red); }
+    .field-group.error .field-wrapper:focus-within { box-shadow: 0 0 0 2px rgba(217,48,37,.15); }
+    .field-group.error label,
+    .field-group.error .field-wrapper:focus-within label { color: var(--red); }
+
+    .field-group input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      color: var(--text-primary);
+      background: transparent;
+      padding: 18px 12px 6px;
+      font-family: var(--font-body);
+      min-width: 0;
+    }
+
+    /* username field suffix */
+    .input-suffix {
+      display: flex;
+      align-items: center;
+      padding: 0 12px 0 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      padding-top: 12px;
+      user-select: none;
+    }
+
+    /* eye icon button */
+    .toggle-pw {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      padding-top: 10px;
+      color: var(--text-secondary);
+      transition: color .15s;
+    }
+    .toggle-pw:hover { color: var(--text-primary); }
+    .toggle-pw svg { width: 20px; height: 20px; pointer-events: none; }
+
+    /* error / helper text */
+    .field-message {
+      font-size: 12px;
+      margin-top: 5px;
+      padding: 0 12px;
+      min-height: 16px;
+      line-height: 1.4;
+    }
+    .field-group.error .field-message { color: var(--red); }
+    .field-message.info { color: var(--text-secondary); }
+
+    /* helper text block below passwords */
+    .helper-block {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin: -12px 0 20px;
+      padding: 0 4px;
+      line-height: 1.5;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .btn-text {
+      background: none;
+      border: none;
+      color: var(--blue);
+      font-family: var(--font-google);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: .25px;
+      transition: background .15s;
+    }
+    .btn-text:hover { background: var(--blue-light); }
+    .btn-text:active { background: rgba(26,115,232,.2); }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      font-family: var(--font-google);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: .25px;
+      box-shadow: var(--shadow);
+      transition: background .15s, box-shadow .15s, transform .1s;
+    }
+    .btn-primary:hover { background: var(--blue-hover); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+    .btn-primary:active { transform: scale(.97); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+    }
+    .modal-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 40px 40px 32px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 48px rgba(0,0,0,.2);
+      transform: scale(.88) translateY(20px);
+      transition: transform .3s cubic-bezier(.22,1,.36,1);
+    }
+    .modal-overlay.visible .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #34a853, #1e8e3e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 4px 16px rgba(52,168,83,.4);
+    }
+    .modal-icon svg { width: 36px; height: 36px; }
+
+    .modal-title {
+      font-family: var(--font-google);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .modal-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .modal-body strong { color: var(--text-primary); }
+
+    .modal .btn-primary {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+    }
+
+    /* ── STARS decoration ── */
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .stars span {
+      font-size: 22px;
+      animation: starPop .4s cubic-bezier(.22,1,.36,1) both;
+    }
+    .stars span:nth-child(2) { animation-delay: .1s; }
+    .stars span:nth-child(3) { animation-delay: .2s; }
+    .stars span:nth-child(4) { animation-delay: .3s; }
+    .stars span:nth-child(5) { animation-delay: .4s; }
+    @keyframes starPop {
+      from { opacity:0; transform: scale(0) rotate(-30deg); }
+      to   { opacity:1; transform: scale(1) rotate(0deg); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      .card { padding: 32px 24px 24px; }
+      .modal { padding: 32px 24px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════ CARD ═══════════════════════════════════ -->
+  <div class="card">
+
+    <!-- Google Logo SVG -->
+    <div class="logo-wrap">
+      <svg class="google-logo" viewBox="0 0 272 92" xmlns="http://www.w3.org/2000/svg">
+        <path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#EA4335"/>
+        <path d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#FBBC05"/>
+        <path d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z" fill="#4285F4"/>
+        <path d="M225 3v65h-9.5V3h9.5z" fill="#34A853"/>
+        <path d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z" fill="#EA4335"/>
+        <path d="M35.29 41.41V32h31.86c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.44.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.63.01z" fill="#4285F4"/>
+      </svg>
+    </div>
+
+    <h1 class="card-title">Crea tu cuenta de Google<br>para Estudiantes</h1>
+    <p class="card-subtitle">¡Aprende a registrarte de forma segura!</p>
+
+    <!-- FORM (no <form> tag to avoid submit) -->
+    <div id="sim-form">
+
+      <!-- USERNAME -->
+      <div class="field-group" id="fg-user">
+        <div class="field-wrapper">
+          <label for="inp-user">Nombre de usuario</label>
+          <input
+            id="inp-user"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            oninput="syncLabel(this)"
+          />
+          <span class="input-suffix">@gmail.com</span>
+        </div>
+        <div class="field-message" id="msg-user"></div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="field-group" id="fg-pw">
+        <div class="field-wrapper">
+          <label for="inp-pw">Contraseña</label>
+          <input
+            id="inp-pw"
+            type="password"
+            autocomplete="new-password"
+            oninput="syncLabel(this)"
+          />
+          <button class="toggle-pw" type="button" onclick="togglePw('inp-pw', this)" aria-label="Mostrar contraseña">
+            <!-- eye open -->
+            <svg id="eye-pw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <div class="field-message" id="msg-pw"></div>
+      </div>
+
+      <!-- CONFIRM PASSWORD -->
+      <div class="field-group" id="fg-pw2">
+        <div class="field-wrapper">
+          <label for="inp-pw2">Confirmar contraseña</label>
+          <input
+            id="inp-pw2"
+            type="password"
+            autocomplete="new-password"
+            oninput="syncLabel(this)"
+          />
+          <button class="toggle-pw" type="button" onclick="togglePw('inp-pw2', this)" aria-label="Mostrar confirmación">
+            <svg id="eye-pw2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <div class="field-message" id="msg-pw2"></div>
+      </div>
+
+      <p class="helper-block">
+        📌 Tu usuario solo puede tener letras, números y puntos (.).
+        La contraseña debe tener al menos 8 caracteres.
+      </p>
+
+      <!-- BUTTONS -->
+      <div class="btn-row">
+        <button class="btn-text" type="button" onclick="resetForm()">Cancelar</button>
+        <button class="btn-primary" type="button" onclick="validate()">Siguiente →</button>
+      </div>
+
+    </div><!-- /sim-form -->
+  </div><!-- /card -->
+
+
+  <!-- ═══════════════════════════════════ MODAL ════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="stars">
+        <span>⭐</span><span>🎉</span><span>✨</span><span>🎉</span><span>⭐</span>
+      </div>
+      <div class="modal-icon">
+        <!-- check icon -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2 class="modal-title" id="modal-title">¡Felicidades! 🥳</h2>
+      <p class="modal-body">
+        Tu <strong>cuenta simulada</strong> ha sido creada con éxito.<br>
+        ¡Estás listo para aprender sobre seguridad digital! 🔐
+      </p>
+      <button class="btn-primary" type="button" onclick="closeModal()">Cerrar</button>
+    </div>
+  </div>
+
+
+  <script>
+    /* ── Floating label sync ── */
+    function syncLabel(input) {
+      const fg = input.closest('.field-group');
+      fg.classList.toggle('has-value', input.value.length > 0);
+      // clear error on typing
+      fg.classList.remove('error');
+      document.getElementById('msg-' + (input.id === 'inp-user' ? 'user' : input.id === 'inp-pw' ? 'pw' : 'pw2')).textContent = '';
+    }
+
+    /* ── Toggle password visibility ── */
+    function togglePw(inputId, btn) {
+      const inp = document.getElementById(inputId);
+      const eyeId = 'eye-' + (inputId === 'inp-pw' ? 'pw' : 'pw2');
+      const svg = document.getElementById(eyeId);
+
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        // show eye-off
+        svg.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+          <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>`;
+      } else {
+        inp.type = 'password';
+        svg.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>`;
+      }
+    }
+
+    /* ── Validation ── */
+    function setError(fgId, msgId, msg) {
+      document.getElementById(fgId).classList.add('error');
+      document.getElementById(msgId).textContent = msg;
+    }
+
+    function clearError(fgId, msgId) {
+      document.getElementById(fgId).classList.remove('error');
+      document.getElementById(msgId).textContent = '';
+    }
+
+    function validate() {
+      const user = document.getElementById('inp-user').value.trim();
+      const pw   = document.getElementById('inp-pw').value;
+      const pw2  = document.getElementById('inp-pw2').value;
+      let valid  = true;
+
+      // --- Username ---
+      if (!user) {
+        setError('fg-user', 'msg-user', '⚠️ Por favor escribe un nombre de usuario.');
+        valid = false;
+      } else if (!/^[a-zA-Z0-9.]+$/.test(user)) {
+        setError('fg-user', 'msg-user', '⚠️ Solo se permiten letras, números y puntos (.).');
+        valid = false;
+      } else {
+        clearError('fg-user', 'msg-user');
+      }
+
+      // --- Password length ---
+      if (!pw) {
+        setError('fg-pw', 'msg-pw', '⚠️ Por favor escribe una contraseña.');
+        valid = false;
+      } else if (pw.length < 8) {
+        setError('fg-pw', 'msg-pw', '⚠️ La contraseña debe tener al menos 8 caracteres.');
+        valid = false;
+      } else {
+        clearError('fg-pw', 'msg-pw');
+      }
+
+      // --- Password match ---
+      if (!pw2) {
+        setError('fg-pw2', 'msg-pw2', '⚠️ Por favor confirma tu contraseña.');
+        valid = false;
+      } else if (pw !== pw2) {
+        setError('fg-pw2', 'msg-pw2', '⚠️ Las contraseñas no coinciden. ¡Inténtalo de nuevo!');
+        valid = false;
+      } else if (pw.length >= 8) {
+        clearError('fg-pw2', 'msg-pw2');
+      }
+
+      if (valid) showModal();
+    }
+
+    /* ── Modal ── */
+    function showModal() {
+      const overlay = document.getElementById('modal-overlay');
+      overlay.classList.add('visible');
+      overlay.querySelector('.stars').style.display = 'flex'; // re-trigger animation
+      // re-trigger star animation by cloning
+      const stars = overlay.querySelector('.stars');
+      const clone = stars.cloneNode(true);
+      stars.replaceWith(clone);
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('visible');
+      resetForm();
+    }
+
+    // close on overlay click
+    document.getElementById('modal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    /* ── Reset ── */
+    function resetForm() {
+      ['inp-user','inp-pw','inp-pw2'].forEach(id => {
+        const el = document.getElementById(id);
+        el.value = '';
+        syncLabel(el);
+      });
+      ['fg-user','fg-pw','fg-pw2'].forEach(fg => {
+        document.getElementById(fg).classList.remove('error','has-value');
+      });
+      ['msg-user','msg-pw','msg-pw2'].forEach(m => {
+        document.getElementById(m).textContent = '';
+      });
+      // reset password type
+      document.getElementById('inp-pw').type = 'password';
+      document.getElementById('inp-pw2').type = 'password';
+      document.getElementById('eye-pw').innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+      document.getElementById('eye-pw2').innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+    }
+  </script>
+</body>
+</html>
