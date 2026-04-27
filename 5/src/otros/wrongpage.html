@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recursos RFM</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    :root {
+      --rojo: #e63946;
+      --rojo-oscuro: #9b2226;
+      --amarillo: #ffb703;
+      --gris-fondo: #f1f1f1;
+      --blanco: #ffffff;
+      --texto: #2b2d42;
+      --sombra: rgba(0,0,0,0.15);
+    }
+    .caja-alerta {
+      background: #fff3cd;
+      border: 3px solid var(--amarillo);
+      border-left: 8px solid var(--rojo);
+      border-radius: 14px;
+      padding: 22px 26px;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .caja-alerta .emoji-grande { font-size: 3.3rem; flex-shrink: 0; line-height: 1; margin-top: 30px;}
+
+    .caja-alerta h2 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--rojo-oscuro);
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .caja-alerta p { color: var(--texto); font-size: 1.5rem; line-height: 1.6; }
+
+    .cuerpo {
+      padding: 36px 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PÁGINA NO CONFIABLE</h1>
+  </header>
+  
+  <div class="cuerpo">
+  <div class="caja-alerta">
+        <div class="emoji-grande">🛑</div>
+        <div>
+          <h2>¡Esta no es una página confiable! ¡No entres aquí!</h2><br>
+          <p>
+            Esta página es un ejemplo que muestra un sitio <strong>NO confiable</strong> para reconocerlas antes de hacer clic.
+          </p>
+        </div>
+      </div>
+  </div>
+
+  <footer style="margin-top:20px; color:#666; font-size:1em; text-align:center;">Creado con <span style="color: rgb(216, 41, 10);">&#10084;</span> para RFM • Recursos RFM</footer>
+</body>
+</html>
