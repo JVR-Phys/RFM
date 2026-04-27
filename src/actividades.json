@@ -77,6 +77,12 @@
       "titulo": "Simulador enviar correo electrónico",
       "imagen": "./6/src/img/gmail-educativo-simulador.jpg",
       "url": "./6/src/actividades/gmail-educativo-simulador.html"
+    },
+    {
+      "id": 14,
+      "titulo": "QUINTO: El día del niño.",
+      "imagen": "./5/src/img/act2.jpg",
+      "url": "./5/src/actividades/act2.html"
     }
   ]
 }
