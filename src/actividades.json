@@ -83,6 +83,12 @@
       "titulo": "QUINTO: El día del niño.",
       "imagen": "./5/src/img/act2.jpg",
       "url": "./5/src/actividades/act2.html"
+    },
+    {
+      "id": 15,
+      "titulo": "TERCERO:Día del iño y la niña",
+      "imagen": "./3/src/img/act1.jpg",
+      "url": "./3/src/actividades/act1.html"
     }
   ]
 }
