@@ -95,6 +95,12 @@
       "titulo": "CUARTO:Estados de México",
       "imagen": "./4/src/img/act6.jpg",
       "url": "./4/src/actividades/act6.html"
+    },
+    {
+      "id": 17,
+      "titulo": "TERCERO: Ordenando un texto",
+      "imagen": "./3/src/img/act2.jpg",
+      "url": "./3/src/actividades/act2.html"
     }
   ]
 }
