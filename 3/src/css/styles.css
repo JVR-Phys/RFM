@@ -155,6 +155,16 @@ ul li a{
     padding-bottom: 10px;
 }
 
+.texto-act_1{
+    text-align: left;
+    background-color: color(srgb 1 0.97 0.31 / 0.26);
+    margin: 30px 30px;
+    padding: 10px 25px;
+    border-radius: 20px;
+    width: fit-content;
+    display: inline-block;
+}
+
 .texto-act{
     text-align: left;
     background-color: color(srgb 1 0.97 0.31 / 0.26);

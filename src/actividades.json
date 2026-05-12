@@ -101,6 +101,12 @@
       "titulo": "TERCERO: Ordenando un texto",
       "imagen": "./3/src/img/act2.jpg",
       "url": "./3/src/actividades/act2.html"
+    },
+    {
+      "id": 18,
+      "titulo": "TERCERO: Rompecabezas informativo",
+      "imagen": "./3/src/img/act3.jpg",
+      "url": "./3/src/actividades/act3.html"
     }
   ]
 }
