@@ -107,6 +107,18 @@
       "titulo": "TERCERO: Rompecabezas informativo",
       "imagen": "./3/src/img/act3.jpg",
       "url": "./3/src/actividades/act3.html"
+    },
+    {
+      "id": 19,
+      "titulo": "SEXTO: Atajos de Word.",
+      "imagen": "./6/src/img/atajos.jpg",
+      "url": "./6/src/actividades/atajos.html"
+    },
+    {
+      "id": 20,
+      "titulo": "SEXTO: Trabajando sin ratón.",
+      "imagen": "./6/src/img/act2.jpg",
+      "url": "./6/src/actividades/act2.html"
     }
   ]
 }
