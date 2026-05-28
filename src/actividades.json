@@ -125,6 +125,12 @@
       "titulo": "TERCERO: Resumiendo un texto",
       "imagen": "./3/src/img/act4.jpg",
       "url": "./3/src/actividades/act4.html"
+    },
+    {
+      "id": 22,
+      "titulo": "TERCERO: Arte y figuras geométricas",
+      "imagen": "./3/src/img/act5.jpg",
+      "url": "./3/src/actividades/act5.html"
     }
   ]
 }
