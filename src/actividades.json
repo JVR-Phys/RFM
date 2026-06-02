@@ -131,6 +131,12 @@
       "titulo": "TERCERO: Arte y figuras geométricas",
       "imagen": "./3/src/img/act5.jpg",
       "url": "./3/src/actividades/act5.html"
+    },
+    {
+      "id": 23,
+      "titulo": "Ecosistemas en Peligro de México.",
+      "imagen": "./4/src/img/act7.jpg",
+      "url": "./4/src/actividades/act7.html"
     }
   ]
 }
