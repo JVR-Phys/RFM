@@ -134,9 +134,15 @@
     },
     {
       "id": 23,
-      "titulo": "Ecosistemas en Peligro de México.",
+      "titulo": "CUARTO: Ecosistemas en Peligro de México.",
       "imagen": "./4/src/img/act7.jpg",
       "url": "./4/src/actividades/act7.html"
+    },
+    {
+      "id": 24,
+      "titulo": "TERCER: Enciclopedia animales en peligro de extinción",
+      "imagen": "./3/src/img/act6.jpg",
+      "url": "./3/src/actividades/act6.html"
     }
   ]
 }
