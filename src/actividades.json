@@ -143,6 +143,12 @@
       "titulo": "TERCER: Enciclopedia animales en peligro de extinción",
       "imagen": "./3/src/img/act6.jpg",
       "url": "./3/src/actividades/act6.html"
+    },
+    {
+      "id": 25,
+      "titulo": "Partes de la computadora",
+      "imagen": "./3/src/img/act7.jpg",
+      "url": "./3/src/actividades/act7.html"
     }
   ]
 }
