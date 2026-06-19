@@ -140,15 +140,21 @@
     },
     {
       "id": 24,
-      "titulo": "TERCER: Enciclopedia animales en peligro de extinción",
+      "titulo": "TERCERO: Enciclopedia animales en peligro de extinción",
       "imagen": "./3/src/img/act6.jpg",
       "url": "./3/src/actividades/act6.html"
     },
     {
       "id": 25,
-      "titulo": "Partes de la computadora",
+      "titulo": "TERCERO: Partes de la computadora",
       "imagen": "./3/src/img/act7.jpg",
       "url": "./3/src/actividades/act7.html"
+    },
+    {
+      "id": 26,
+      "titulo": "QUINTO: Planetas del sistema solar.",
+      "imagen": "./5/src/img/act3.jpg",
+      "url": "https://spaceplace.nasa.gov/planets/sp/"
     }
   ]
 }
