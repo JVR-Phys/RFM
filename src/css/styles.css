@@ -20,10 +20,6 @@ header{
     /* padding-left: 35px; */
     border-radius:10px;
     margin-bottom:16px;
-        display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.5rem;
 }
 
 header h1{
@@ -32,13 +28,20 @@ header h1{
     padding-right: 50px;
 }
 
-header div{
+.inicio{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.inicio div{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
 }
 
-header img{
+.inicio img{
     max-height: 120px;
     width: auto;
 }
@@ -82,9 +85,11 @@ header img{
     display: block;
     text-align: center;
     color: white;
-    padding: 15px 20px;
+    padding: 15px 0px;
     text-decoration: none;
     transition: background-color 0.3s;
+    min-width: 160px;
+    font-weight: bolder;
 }
 
 .barNav a:hover{
@@ -141,6 +146,14 @@ header img{
     background-color: #4A148C;
 }
 
+.juegos{
+    background-color: #ca2cb0;
+    border-radius: 15px;
+}
+.juegos:hover{
+    background-color: #8c1468;
+}
+
 @media (max-width: 600px) {
     .barNav ul {
         display: flex;
@@ -172,7 +185,7 @@ header img{
 .titulo-seccion {
     color: #1a237e;
     margin-bottom: 24px;
-    font-size: 1.5em;
+    font-size: 1.7em;
     padding-bottom: 10px;
 }
 
