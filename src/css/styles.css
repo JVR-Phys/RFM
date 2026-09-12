@@ -216,7 +216,8 @@ header h1{
 }
 
 .tarjeta p {
-    font-size: 0.9em;
+    font-size: 1em;
+    font-weight: bolder;
     color: #444;
     margin: 0;
 }
