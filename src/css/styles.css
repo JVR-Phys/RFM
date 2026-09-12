@@ -16,19 +16,36 @@ body{
 
 header{
     background:#1a237e;
-    padding:12px;
+    padding:15px 35px;
+    /* padding-left: 35px; */
     border-radius:10px;
     margin-bottom:16px;
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
 }
 
-h1{
+header h1{
     color:#ffffff;
     margin:0;
+    padding-right: 50px;
 }
 
-p{
-    margin:10px 0;
+header div{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
+
+header img{
+    max-height: 120px;
+    width: auto;
+}
+
+/* p{
+    margin:10px 0;
+} */
 
 .box{
     background:
@@ -45,7 +62,7 @@ p{
 }
 
 .nota{
-    font-size:1em;
+    font-size:1.2em;
     color:#e0e0e0
 }
 
