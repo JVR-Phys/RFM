@@ -1,0 +1,166 @@
+{
+  "actividades": [
+    {
+      "id": 1,
+      "titulo": "SEXTO: Introducción electrónica.",
+      "imagen": "./6/src/img/act1.jpg",
+      "url": "./6/src/actividades/act1.html"
+    },
+    {
+      "id": 2,
+      "titulo": "CUARTO: El Robot que quería ser Chef.",
+      "imagen": "./4/src/img/act1.jpg",
+      "url": "./4/src/actividades/act1.html"
+    },
+    {
+      "id": 3,
+      "titulo": "CUARTO: Gigantes de la Prehistoria.",
+      "imagen": "./4/src/img/act2.jpg",
+      "url": "./4/src/actividades/act2.html"
+    },
+    {
+      "id": 4,
+      "titulo": "CUARTO: Natalicio de Benito Juárez.",
+      "imagen": "./4/src/img/act3.jpg",
+      "url": "./4/src/actividades/act3.html"
+    },
+    {
+      "id": 5,
+      "titulo": "CUARTO: Misiones a la Luna.",
+      "imagen": "./4/src/img/act4.jpg",
+      "url": "./4/src/actividades/act4.html"
+    },
+    {
+      "id": 6,
+      "titulo": "QUINTO: Rumbo a la Luna.",
+      "imagen": "./5/src/img/act1.jpg",
+      "url": "./5/src/actividades/act1.html"
+    },
+    {
+      "id": 7,
+      "titulo": "Como usar una protoboard",
+      "imagen": "./6/src/img/Como usar una protoboard.jpg",
+      "url": "./6/src/actividades/Como usar una protoboard.pdf"
+    },
+    {
+      "id": 8,
+      "titulo": "Conectar un LED",
+      "imagen": "./6/src/img/Conectar un LED.jpg",
+      "url": "./6/src/actividades/Conectar un LED.pdf"
+    },
+    {
+      "id": 9,
+      "titulo": "Conectar un boton",
+      "imagen": "./6/src/img/Conectar un boton.jpg",
+      "url": "./6/src/actividades/Conectar un boton.pdf"
+    },
+    {
+      "id": 10,
+      "titulo": "Conectar un sensor",
+      "imagen": "./6/src/img/Conectar un sensor.jpg",
+      "url": "./6/src/actividades/Conectar un sensor.pdf"
+    },
+    {
+      "id": 11,
+      "titulo": "Investigación sobre animales.",
+      "imagen": "./4/src/img/act5.jpg",
+      "url": "./4/src/actividades/act5.html"
+    },
+    {
+      "id": 12,
+      "titulo": "Simulador inicio de sesión gmail",
+      "imagen": "./6/src/img/google-signup-simulator.jpg",
+      "url": "./6/src/actividades/google-signup-simulator.html"
+    },
+    {
+      "id": 13,
+      "titulo": "Simulador enviar correo electrónico",
+      "imagen": "./6/src/img/gmail-educativo-simulador.jpg",
+      "url": "./6/src/actividades/gmail-educativo-simulador.html"
+    },
+    {
+      "id": 14,
+      "titulo": "QUINTO: El día del niño.",
+      "imagen": "./5/src/img/act2.jpg",
+      "url": "./5/src/actividades/act2.html"
+    },
+    {
+      "id": 15,
+      "titulo": "TERCERO:Día del iño y la niña",
+      "imagen": "./3/src/img/act1.jpg",
+      "url": "./3/src/actividades/act1.html"
+    },
+    {
+      "id": 16,
+      "titulo": "CUARTO:Estados de México",
+      "imagen": "./4/src/img/act6.jpg",
+      "url": "./4/src/actividades/act6.html"
+    },
+    {
+      "id": 17,
+      "titulo": "TERCERO: Ordenando un texto",
+      "imagen": "./3/src/img/act2.jpg",
+      "url": "./3/src/actividades/act2.html"
+    },
+    {
+      "id": 18,
+      "titulo": "TERCERO: Rompecabezas informativo",
+      "imagen": "./3/src/img/act3.jpg",
+      "url": "./3/src/actividades/act3.html"
+    },
+    {
+      "id": 19,
+      "titulo": "SEXTO: Atajos de Word.",
+      "imagen": "./6/src/img/atajos.jpg",
+      "url": "./6/src/actividades/atajos.html"
+    },
+    {
+      "id": 20,
+      "titulo": "SEXTO: Trabajando sin ratón.",
+      "imagen": "./6/src/img/act2.jpg",
+      "url": "./6/src/actividades/act2.html"
+    },
+    {
+      "id": 21,
+      "titulo": "TERCERO: Resumiendo un texto",
+      "imagen": "./3/src/img/act4.jpg",
+      "url": "./3/src/actividades/act4.html"
+    },
+    {
+      "id": 22,
+      "titulo": "TERCERO: Arte y figuras geométricas",
+      "imagen": "./3/src/img/act5.jpg",
+      "url": "./3/src/actividades/act5.html"
+    },
+    {
+      "id": 23,
+      "titulo": "CUARTO: Ecosistemas en Peligro de México.",
+      "imagen": "./4/src/img/act7.jpg",
+      "url": "./4/src/actividades/act7.html"
+    },
+    {
+      "id": 24,
+      "titulo": "TERCERO: Enciclopedia animales en peligro de extinción",
+      "imagen": "./3/src/img/act6.jpg",
+      "url": "./3/src/actividades/act6.html"
+    },
+    {
+      "id": 25,
+      "titulo": "TERCERO: Partes de la computadora",
+      "imagen": "./3/src/img/act7.jpg",
+      "url": "./3/src/actividades/act7.html"
+    },
+    {
+      "id": 26,
+      "titulo": "QUINTO: Planetas del sistema solar.",
+      "imagen": "./5/src/img/act3.jpg",
+      "url": "https://spaceplace.nasa.gov/planets/sp/"
+    },
+    {
+      "id": 27,
+      "titulo": "",
+      "imagen": "./5/src/img/act4.jpg",
+      "url": "./5/src/actividades/act4.html"
+    }
+  ]
+}
