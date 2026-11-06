@@ -5,6 +5,12 @@
       "titulo": "CUARTO GRADO: Datos curiosos.",
       "imagen": "./4/src/img/act1.jpg",
       "url": "./4/src/actividades/act1.html"
+    },
+    {
+      "id": 2,
+      "titulo": "TERCER GRADO: Animales.",
+      "imagen": "./3/src/img/act1.jpg",
+      "url": "./3/src/actividades/act1.html"
     }
   ]
 }
