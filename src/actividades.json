@@ -8,7 +8,11 @@
     },
     {
       "id": 2,
+<<<<<<< HEAD
       "titulo": "TERCER GRADO: Animales.",
+=======
+      "titulo": "TERCER GRADO: Animales de México.",
+>>>>>>> 5475c7b87d8e5c9d191d5e53d002112aeb44375d
       "imagen": "./3/src/img/act1.jpg",
       "url": "./3/src/actividades/act1.html"
     }
