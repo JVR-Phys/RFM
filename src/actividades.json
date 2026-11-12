@@ -17,6 +17,12 @@
       "titulo": "SEXTO GRADO: Linea del tiempo.",
       "imagen": "./6/src/img/act1.jpg",
       "url": "./6/src/actividades/act1.html"
+    },
+    {
+      "id": 4,
+      "titulo": "",
+      "imagen": "./3/src/img/act2.jpg",
+      "url": "./3/src/actividades/act2.html"
     }
   ]
 }
