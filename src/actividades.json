@@ -29,6 +29,12 @@
       "titulo": "CUARTO GRADO: Gigantes de la prehistoria",
       "imagen": "./4/src/img/act2.jpg",
       "url": "./4/src/actividades/act2.html"
+    },
+    {
+      "id": 6,
+      "titulo": "TERCER GRADO: Cuento para ordenar",
+      "imagen": "./3/src/img/act3.jpg",
+      "url": "./3/src/actividades/act3.html"
     }
   ]
 }
